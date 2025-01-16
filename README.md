@@ -29,10 +29,15 @@ The repository contains:
 
 ---
 
-## Prerequisites  
-To run this project, you need the following installed:  
-- Node.js  
-- npm (Node Package Manager)  
-- MongoDB  
+## Directory structure
+
+![directory page](loan_ss/pro_structure.png)
 
 ---
+## Project images - find in loan_ss
+![home](loan_ss/home.png)
+![login](loan_ss/login.png)
+![laon apply](loan_ss/loan_apply.png)
+![admin dashboard](loan_ss/all_loans.png)
+![admin](loan_ss/admin_das.png)
+![user pdf details](loan_ss/pdf_doc.png)
