@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 
 const Navbar = ({ isLoggedIn, userRole, logout }) => {
   return (
-    <nav className="bg-blue-600 p-4 text-white">
+    <nav className="bg-green-600 p-4 text-white ">
       <div className="container mx-auto flex justify-between items-center">
-        <Link to="/" className="font-bold text-xl">MyApp</Link>
+        <Link to="/" className="font-bold text-xl">EZFINANZ</Link>
         <div className="space-x-4">
           <Link to="/about" className="hover:underline">About Us</Link>
           <Link to="/contact" className="hover:underline">Contact Us</Link>

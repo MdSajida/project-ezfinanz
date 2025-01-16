@@ -3,13 +3,14 @@
 import React, { useState } from 'react';
 import InputField from '../components/InputField';
 import Button from '../components/Button';
-import { Link } from 'react-router-dom';
+import { Link , useNavigate } from 'react-router-dom';
 import { validateName, validateEmail, validatePassword, validatePhone } from '../utils/validations'; // Import validation functions
 
 const Signup = () => {
   const [formData, setFormData] = useState({ name: '', email: '', password: '', phone: '' });
   const [errors, setErrors] = useState({}); // State for errors
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();  // For navigation after successful signup
 
 // Toggle password visibility
   const togglePassword = () => setShowPassword(!showPassword);
@@ -20,7 +21,7 @@ const Signup = () => {
     setErrors({ ...errors, [name]: '' }); // Clear errors as user types
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
 
     // Validate fields
@@ -42,15 +43,41 @@ const Signup = () => {
 
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors); // Show errors
+      return;
     } else {
      // console.log(formData); // Handle form submission
        // Save trimmed name and log formData
        const trimmedFormData = { ...formData, name: formData.name.trim(),phone: formData.phone.trim(),email: formData.email.trim(),password: formData.password.trim(), };
        console.log(trimmedFormData);
+       setFormData(trimmedFormData)
        // Clear the form after submission
-      setFormData({ name: '', email: '', password: '', phone: '' });
-      setErrors({});
+      
     }
+    try{
+           // Send data to backend
+        const response = await fetch('http://localhost:8000/api/auth/signup', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData), // Sending the trimmed form data as JSON
+        });
+
+        const data = await response.json();
+        
+        if (response.ok) {
+          console.log('Signup successful:', data);
+          // Redirect to login page after successful signup
+          navigate('/login');
+        } else {
+          setErrors({ general: data.message || 'Signup failed' });
+        }
+    }catch(error){
+      console.error('Error:', error);
+      setErrors({ general: 'Something went wrong. Please try again.' });
+    }
+    setFormData({ name: '', email: '', password: '', phone: '' });
+    setErrors({});
   };
 
   return (

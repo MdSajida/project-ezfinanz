@@ -2,14 +2,17 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+const cors = require('cors');
 const authRoutes = require("./routes/auth");
 const loanRoutes = require("./routes/loans");
 const adminRoutes = require("./routes/admin");
 
+
 const app = express();
+
 dotenv.config();
 app.use(express.json());
-
+app.use(cors());
 
 
 app.get("/", (req, res) => {
